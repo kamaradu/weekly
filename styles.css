@@ -23,7 +23,7 @@ body {
   background: #eee url('./assets/background.png') center / cover no-repeat;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .header {
@@ -90,13 +90,12 @@ h1 {
 
 .metrics {
   position: relative;
-  padding: 0 24px;
+  padding: 0 24px 24px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: 24px;
   row-gap: 63px;
   z-index: 2;
-  align-content: center;
   justify-items: start;
   max-width: 100%;
   width: 100%;
@@ -165,7 +164,7 @@ h1 {
   .header { left: 18px; right: 18px; }
   h1 { font-size: 25px; }
   .date-range { font-size: 14px; }
-  .metrics { padding: 0 18px; grid-template-columns: 1fr; }
+  .metrics { padding: 0 18px 18px; grid-template-columns: 1fr; }
   .percent { font-size: 54px; }
 }
 
