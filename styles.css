@@ -23,11 +23,14 @@ body {
   background: #eee url('./assets/background.png') center / cover no-repeat;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .header {
-  position: relative;
-  padding: 27px 24px;
+  position: absolute;
+  top: 27px;
+  left: 24px;
+  right: 24px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -87,15 +90,16 @@ h1 {
 
 .metrics {
   position: relative;
-  flex: 1;
-  padding: 0 24px 24px;
+  padding: 0 24px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: 24px;
   row-gap: 63px;
   z-index: 2;
-  align-content: start;
-  overflow: auto;
+  align-content: center;
+  justify-items: start;
+  max-width: 100%;
+  width: 100%;
 }
 
 .metric {
@@ -158,10 +162,10 @@ h1 {
 }
 
 @media (max-width: 560px) {
-  .header { padding: 24px 18px; }
+  .header { left: 18px; right: 18px; }
   h1 { font-size: 25px; }
   .date-range { font-size: 14px; }
-  .metrics { padding: 0 18px 18px; grid-template-columns: 1fr; }
+  .metrics { padding: 0 18px; grid-template-columns: 1fr; }
   .percent { font-size: 54px; }
 }
 
