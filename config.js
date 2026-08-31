@@ -11,5 +11,21 @@ window.SITE_CONFIG = {
   TITLE: 'Статистика за тиждень',
   LOCALE: 'uk-UA',
   WEEK_STARTS_MONDAY: true,
-  METRIC_COUNT: 7
+  METRIC_COUNT: 7,
+  STYLES: {
+    body: {
+      margin: '0',
+      padding: '0',
+      width: '100vw',
+      height: '100vh',
+      overflow: 'hidden'
+    },
+    container: {
+      padding: '24px',
+      width: '100%',
+      height: '100%',
+      boxSizing: 'border-box',
+      overflow: 'auto'
+    }
+  }
 };
