@@ -1,0 +1,9 @@
+[
+  {"week_start":"2026-08-24","week_end":"2026-08-30","metric_id":"experience","label":"Досвід керування дроном респондентів","percent":40,"answer":"Є певний досвід, більше 10 годин","sort_order":1},
+  {"week_start":"2026-08-24","week_end":"2026-08-30","metric_id":"plan","label":"Більшість планує використовувати симулятор","percent":80,"answer":"Регулярно тренуватися","sort_order":2},
+  {"week_start":"2026-08-24","week_end":"2026-08-30","metric_id":"learning","label":"Найбільше ускладнення навчання або тренування","percent":53.3,"answer":"Стабільний доступ до дрона","sort_order":3},
+  {"week_start":"2026-08-24","week_end":"2026-08-30","metric_id":"current_training","label":"Респонденти найчастіше тренуються наразі","percent":46.7,"answer":"В інших симуляторах","sort_order":4},
+  {"week_start":"2026-08-24","week_end":"2026-08-30","metric_id":"priority","label":"Найважливіше для респондентів при виборі симулятора","percent":93.3,"answer":"Реалістична фізика дрону","sort_order":5},
+  {"week_start":"2026-08-24","week_end":"2026-08-30","metric_id":"barrier","label":"Найбільшим бар’єром для використання симулятора","percent":33.3,"answer":"Мій комп’ютер може не відповідати вимогам","sort_order":6},
+  {"week_start":"2026-08-24","week_end":"2026-08-30","metric_id":"discovery","label":"Дізнаються про наш симулятор через наступні канали","percent":53.3,"answer":"Порадили колеги або знайомі","sort_order":7}
+]

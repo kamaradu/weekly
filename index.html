@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Щотижнева статистика" />
+  <title>Статистика за тиждень</title>
+  <link rel="preconnect" href="https://cdn.onlyfonts.ai" crossorigin>
+  <link rel="stylesheet" href="https://cdn.onlyfonts.ai/e-ukraine/font.css">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="stats" class="page">
+    <header class="header">
+      <div>
+        <h1>Статистика за тиждень</h1>
+        <p id="date-range" class="date-range">Завантаження…</p>
+      </div>
+      <button id="copy-button" class="copy-button" type="button" aria-label="Завантажити статистику як PNG">
+        <span class="copy-icon" aria-hidden="true"></span>
+        <span>Копіювати дані</span>
+      </button>
+    </header>
+
+    <section id="metrics" class="metrics" aria-live="polite"></section>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
