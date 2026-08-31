@@ -6,7 +6,7 @@
   3. Якщо URL порожній, сайт використовує demo-data.json.
 */
 window.SITE_CONFIG = {
-  CSV_URL: '',
+  CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTX1JLYsoAmLVrZP3s11N2l0MOB-EpxgEGEeQiustOaKvlnb-u7lZJmzRd0ChFbTDy8zNDwZAV1ZVhv/pub?gid=0&single=true&output=csv',
   FALLBACK_DATA_URL: './demo-data.json',
   TITLE: 'Статистика за тиждень',
   LOCALE: 'uk-UA',
