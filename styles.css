@@ -120,12 +120,13 @@ h1 {
   font-size: clamp(14px, 1.15vw, 17px);
   line-height: 1.25;
   font-weight: 500;
+  color: var(--muted);
   letter-spacing: -0.025em;
 }
 .answer {
   margin: 8px 0 0;
   max-width: 330px;
-  color: var(--muted);
+  color: var(--ink);
   font-size: clamp(13px, 1.05vw, 16px);
   line-height: 1.28;
   font-weight: 400;
