@@ -117,7 +117,7 @@ h1 {
 .label {
   margin: 18px 0 0;
   max-width: 310px;
-  font-size: clamp(14px, 1.15vw, 17px);
+  font-size: clamp(13px, 1.05vw, 16px);
   line-height: 1.25;
   font-weight: 400;
   color: var(--muted);
@@ -127,7 +127,7 @@ h1 {
   margin: 8px 0 0;
   max-width: 330px;
   color: var(--ink);
-  font-size: clamp(13px, 1.05vw, 16px);
+  font-size: clamp(14px, 1.15vw, 17px);
   line-height: 1.28;
   font-weight: 400;
   letter-spacing: -0.02em;
