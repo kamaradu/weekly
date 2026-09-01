@@ -42,7 +42,7 @@ h1 {
   font-size: clamp(24px, 2.15vw, 34px);
   line-height: 1.08;
   font-weight: 700;
-  letter-spacing: -0.045em;
+  letter-spacing: 0.045em;
 }
 
 .date-range {
