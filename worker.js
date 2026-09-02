@@ -1,11 +1,10 @@
-
 // /worker.js
 
 export default {
   async fetch(request, env) {
     const authorization = request.headers.get("Authorization");
 
-    if (!authorization || !authorization.startsWith("Basic ")) {
+    if (!authorization) {
       return unauthorized();
     }
 
@@ -15,11 +14,29 @@ export default {
       return unauthorized();
     }
 
-    const { username, password } = credentials;
+    const usernameConfigured =
+      typeof env.AUTH_USERNAME === "string" &&
+      env.AUTH_USERNAME.length > 0;
+
+    const passwordConfigured =
+      typeof env.AUTH_PASSWORD === "string" &&
+      env.AUTH_PASSWORD.length > 0;
+
+    if (!usernameConfigured || !passwordConfigured) {
+      return new Response(
+        `Secrets missing: username=${usernameConfigured}, password=${passwordConfigured}`,
+        {
+          status: 500,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+          },
+        }
+      );
+    }
 
     if (
-      username !== env.AUTH_USERNAME ||
-      password !== env.AUTH_PASSWORD
+      credentials.username !== env.AUTH_USERNAME ||
+      credentials.password !== env.AUTH_PASSWORD
     ) {
       return unauthorized();
     }
