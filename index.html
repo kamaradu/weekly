@@ -10,88 +10,119 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main id="stats" class="page">
-    <header class="header">
-      <div>
-        <h1>Статистика новоприбулих</h1>
-        <p id="date-range" class="date-range">Завантаження…</p>
-      </div>
-      <button id="copy-button" class="copy-button" type="button" aria-label="Завантажити статистику як PNG">
-        <span>Копіювати дані</span>
-      </button>
-    </header>
 
-    <section id="metrics" class="metrics" aria-live="polite"></section>
+  <div class="curtain-stage">
 
-    <div id="status" class="status" role="status" aria-live="polite"></div>
-  </main>
+    <main id="stats" class="page">
+      <header class="header">
+        <div>
+          <h1>Статистика новоприбулих</h1>
+          <p id="date-range" class="date-range">Завантаження…</p>
+        </div>
 
-    <!-- WEEKLY HISTORY -->
-  <main id="history" class="history-page">
-    <header class="history-header">
-      <div>
-        <h2>Історія статистики</h2>
-        <p class="history-subtitle">Динаміка показників за тижнями</p>
-      </div>
-    </header>
+        <button
+          id="copy-button"
+          class="copy-button"
+          type="button"
+          aria-label="Завантажити статистику як PNG"
+        >
+          <span>Копіювати дані</span>
+        </button>
+      </header>
 
-    <section id="history-table" class="history-table" aria-live="polite">
-      <div class="history-loading">Завантаження…</div>
-    </section>
-  </main>
+      <section
+        id="metrics"
+        class="metrics"
+        aria-live="polite"
+      ></section>
+
+      <div
+        id="status"
+        class="status"
+        role="status"
+        aria-live="polite"
+      ></div>
+    </main>
+
+
+    <main id="history" class="history-page">
+      <header class="history-header">
+        <div>
+          <h2>Історія статистики</h2>
+          <p class="history-subtitle">
+            Динаміка показників за тижнями
+          </p>
+        </div>
+      </header>
+
+      <section
+        id="history-table"
+        class="history-table"
+        aria-live="polite"
+      >
+        <div class="history-loading">
+          Завантаження…
+        </div>
+      </section>
+    </main>
+
+  </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
+
   <script>
-(function initCurtainEffect() {
-  const firstScreen = document.querySelector('.page');
+    (function initCurtainEffect() {
+      const firstScreen = document.querySelector('.page');
 
-  if (!firstScreen) {
-    return;
-  }
+      if (!firstScreen) {
+        return;
+      }
 
-  let ticking = false;
+      let ticking = false;
 
-  function updateCurtain() {
-    const screenHeight = window.innerHeight;
+      function updateCurtain() {
+        const screenHeight = window.innerHeight;
 
-    const progress = Math.min(
-      Math.max(window.scrollY / screenHeight, 0),
-      1
-    );
+        const progress = Math.min(
+          Math.max(window.scrollY / screenHeight, 0),
+          1
+        );
 
-    const translateY = progress * -screenHeight;
+        const translateY = -progress * screenHeight;
 
-    firstScreen.style.transform =
-      `translate3d(0, ${translateY}px, 0)`;
+        firstScreen.style.transform =
+          `translate3d(0, ${translateY}px, 0)`;
 
-    ticking = false;
-  }
+        ticking = false;
+      }
 
-  function requestUpdate() {
-    if (ticking) {
-      return;
-    }
+      function requestUpdate() {
+        if (ticking) {
+          return;
+        }
 
-    ticking = true;
+        ticking = true;
 
-    requestAnimationFrame(updateCurtain);
-  }
+        requestAnimationFrame(updateCurtain);
+      }
 
-  window.addEventListener(
-    'scroll',
-    requestUpdate,
-    { passive: true }
-  );
+      window.addEventListener(
+        'scroll',
+        requestUpdate,
+        { passive: true }
+      );
 
-  window.addEventListener(
-    'resize',
-    requestUpdate
-  );
+      window.addEventListener(
+        'resize',
+        requestUpdate
+      );
 
-  updateCurtain();
-})();
-</script>
+      updateCurtain();
+    })();
+  </script>
+
 </body>
 </html>
