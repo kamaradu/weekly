@@ -33,7 +33,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 
-  background: #eee;
+  background: #ffffff;
 
   color: var(--ink);
 
@@ -42,7 +42,19 @@ body {
 
 
 /* =========================================================
-   FIRST SCREEN
+   SCROLL SPACE
+   ========================================================= */
+
+.scroll-space {
+  width: 100%;
+  height: 200vh;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   FIRST SCREEN — CURTAIN
    ========================================================= */
 
 .page {
@@ -57,7 +69,9 @@ body {
 
   overflow: hidden;
 
-  background: #eee url('./assets/background.png') center / cover no-repeat;
+  background:
+    #eee url('./assets/background.png')
+    center / cover no-repeat;
 
   display: flex;
   flex-direction: column;
@@ -66,6 +80,8 @@ body {
   z-index: 2;
 
   will-change: transform;
+
+  transform: translate3d(0, 0, 0);
 }
 
 
@@ -134,7 +150,11 @@ h1 {
 
   margin-right: 0;
 
-  font: 500 clamp(14px, 1.15vw, 17px)/1 'e-Ukraine', Arial, sans-serif;
+  font:
+    500 clamp(14px, 1.15vw, 17px) / 1
+    'e-Ukraine',
+    Arial,
+    sans-serif;
 
   cursor: pointer;
 }
@@ -202,7 +222,8 @@ h1 {
 
   display: grid;
 
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
 
   column-gap: 24px;
   row-gap: 63px;
@@ -308,13 +329,13 @@ h1 {
 
 
 /* =========================================================
-   WEEKLY HISTORY
+   SECOND SCREEN
    ========================================================= */
 
 .history-page {
-  position: absolute;
+  position: fixed;
 
-  top: 100vh;
+  top: 0;
   left: 0;
 
   width: 100%;
@@ -544,7 +565,8 @@ h1 {
 
 @media (max-width: 900px) {
   .metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
 
     row-gap: 44px;
   }
