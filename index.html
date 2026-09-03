@@ -36,9 +36,33 @@
 
 <body>
 
-  <!-- =======================================================
-       FIRST SCREEN
-       ======================================================= -->
+  <div class="scroll-space" aria-hidden="true"></div>
+
+  <main
+    id="history"
+    class="history-page"
+  >
+    <header class="history-header">
+      <div>
+        <h2>Історія статистики</h2>
+
+        <p class="history-subtitle">
+          Динаміка показників за тижнями
+        </p>
+      </div>
+    </header>
+
+    <section
+      id="history-table"
+      class="history-table"
+      aria-live="polite"
+    >
+      <div class="history-loading">
+        Завантаження…
+      </div>
+    </section>
+  </main>
+
 
   <main
     id="stats"
@@ -48,10 +72,7 @@
     <header class="header">
 
       <div>
-
-        <h1>
-          Статистика новоприбулих
-        </h1>
+        <h1>Статистика новоприбулих</h1>
 
         <p
           id="date-range"
@@ -59,7 +80,6 @@
         >
           Завантаження…
         </p>
-
       </div>
 
       <button
@@ -68,20 +88,16 @@
         type="button"
         aria-label="Завантажити статистику як PNG"
       >
-        <span>
-          Копіювати дані
-        </span>
+        <span>Копіювати дані</span>
       </button>
 
     </header>
-
 
     <section
       id="metrics"
       class="metrics"
       aria-live="polite"
     ></section>
-
 
     <div
       id="status"
@@ -93,51 +109,6 @@
   </main>
 
 
-  <!-- =======================================================
-       SECOND SCREEN
-       ======================================================= -->
-
-  <main
-    id="history"
-    class="history-page"
-  >
-
-    <header class="history-header">
-
-      <div>
-
-        <h2>
-          Історія статистики
-        </h2>
-
-        <p class="history-subtitle">
-          Динаміка показників за тижнями
-        </p>
-
-      </div>
-
-    </header>
-
-
-    <section
-      id="history-table"
-      class="history-table"
-      aria-live="polite"
-    >
-
-      <div class="history-loading">
-        Завантаження…
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- =======================================================
-       LIBRARIES
-       ======================================================= -->
-
   <script
     src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
   ></script>
@@ -147,14 +118,9 @@
   <script src="app.js"></script>
 
 
-  <!-- =======================================================
-       CURTAIN EFFECT
-       ======================================================= -->
-
   <script>
-    (function initCurtainEffect() {
-      const firstScreen =
-        document.querySelector('.page');
+    (() => {
+      const firstScreen = document.getElementById('stats');
 
       if (!firstScreen) {
         return;
@@ -163,23 +129,15 @@
       let ticking = false;
 
       function updateCurtain() {
-        const viewportHeight =
-          window.innerHeight;
+        const viewportHeight = window.innerHeight;
+        const scrollTop = window.scrollY;
 
-        const scrollTop =
-          window.scrollY;
+        const progress = Math.min(
+          Math.max(scrollTop / viewportHeight, 0),
+          1
+        );
 
-        const progress =
-          Math.min(
-            Math.max(
-              scrollTop / viewportHeight,
-              0
-            ),
-            1
-          );
-
-        const translateY =
-          -progress * viewportHeight;
+        const translateY = -progress * viewportHeight;
 
         firstScreen.style.transform =
           `translate3d(0, ${translateY}px, 0)`;
@@ -194,17 +152,13 @@
 
         ticking = true;
 
-        requestAnimationFrame(
-          updateCurtain
-        );
+        requestAnimationFrame(updateCurtain);
       }
 
       window.addEventListener(
         'scroll',
         requestUpdate,
-        {
-          passive: true
-        }
+        { passive: true }
       );
 
       window.addEventListener(
