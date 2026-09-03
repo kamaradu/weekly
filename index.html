@@ -44,10 +44,6 @@
   <script src="config.js"></script>
   <script src="app.js"></script>
   <script>
-    /* =========================================================
-   CURTAIN EFFECT
-   ========================================================= */
-
 (function initCurtainEffect() {
   const firstScreen = document.querySelector('.page');
 
@@ -60,10 +56,6 @@
   function updateCurtain() {
     const screenHeight = window.innerHeight;
 
-    /*
-     * Перший екран залишається sticky,
-     * але поступово виїжджає вгору на висоту viewport.
-     */
     const progress = Math.min(
       Math.max(window.scrollY / screenHeight, 0),
       1
@@ -100,6 +92,6 @@
 
   updateCurtain();
 })();
-  </script>
+</script>
 </body>
 </html>
