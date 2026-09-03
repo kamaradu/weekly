@@ -1,3 +1,7 @@
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
 :root {
   --page-width: 1440px;
   --page-height: 812px;
@@ -18,7 +22,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -26,14 +30,16 @@ body {
   color: var(--ink);
   font-family: 'e-Ukraine', Arial, sans-serif;
   width: 100vw;
-  min-height: 100vh;
+  min-height: 200vh;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
+
 /* =========================================================
-   FIRST SCREEN
+   FIRST SCREEN — CURTAIN
    ========================================================= */
+
 .page {
   position: fixed;
   top: 0;
@@ -56,8 +62,14 @@ body {
   will-change: transform;
 }
 
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
 .header {
   position: absolute;
+
   top: 27px;
   left: 24px;
   right: 24px;
@@ -92,6 +104,11 @@ h1 {
 
   letter-spacing: -0.025em;
 }
+
+
+/* =========================================================
+   COPY BUTTON
+   ========================================================= */
 
 .copy-button {
   appearance: none;
@@ -156,6 +173,11 @@ h1 {
 
   background: rgba(238, 238, 238, 0.35);
 }
+
+
+/* =========================================================
+   METRICS
+   ========================================================= */
 
 .metrics {
   position: relative;
@@ -228,6 +250,11 @@ h1 {
   letter-spacing: -0.02em;
 }
 
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
 .status {
   position: fixed;
 
@@ -270,12 +297,19 @@ h1 {
 
 .history-page {
   position: relative;
+
   z-index: 1;
 
   width: 100%;
   height: 100vh;
   min-height: 100vh;
 
+  /*
+   * The first screen is fixed and therefore removed from
+   * normal document flow. The history starts exactly one
+   * viewport below it so both surfaces meet during the
+   * curtain transition.
+   */
   margin-top: 100vh;
 
   overflow: hidden;
@@ -290,6 +324,10 @@ h1 {
   color: #000;
 }
 
+
+/* =========================================================
+   HISTORY HEADER
+   ========================================================= */
 
 .history-header {
   flex: 0 0 auto;
