@@ -1,81 +1,160 @@
+<!-- index.html -->
+
 <!doctype html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Щотижнева статистика" />
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Щотижнева статистика"
+  >
+
   <title>Статистика новоприбулих</title>
-  <link rel="preconnect" href="https://cdn.onlyfonts.ai" crossorigin>
-  <link rel="stylesheet" href="https://cdn.onlyfonts.ai/e-ukraine/font.css">
-  <link rel="stylesheet" href="styles.css" />
+
+  <link
+    rel="preconnect"
+    href="https://cdn.onlyfonts.ai"
+    crossorigin
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.onlyfonts.ai/e-ukraine/font.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
 </head>
+
 <body>
 
-  <div class="curtain-stage">
+  <!-- =======================================================
+       FIRST SCREEN
+       ======================================================= -->
 
-    <main id="stats" class="page">
-      <header class="header">
-        <div>
-          <h1>Статистика новоприбулих</h1>
-          <p id="date-range" class="date-range">Завантаження…</p>
-        </div>
+  <main
+    id="stats"
+    class="page"
+  >
 
-        <button
-          id="copy-button"
-          class="copy-button"
-          type="button"
-          aria-label="Завантажити статистику як PNG"
+    <header class="header">
+
+      <div>
+
+        <h1>
+          Статистика новоприбулих
+        </h1>
+
+        <p
+          id="date-range"
+          class="date-range"
         >
-          <span>Копіювати дані</span>
-        </button>
-      </header>
-
-      <section
-        id="metrics"
-        class="metrics"
-        aria-live="polite"
-      ></section>
-
-      <div
-        id="status"
-        class="status"
-        role="status"
-        aria-live="polite"
-      ></div>
-    </main>
-
-
-    <main id="history" class="history-page">
-      <header class="history-header">
-        <div>
-          <h2>Історія статистики</h2>
-          <p class="history-subtitle">
-            Динаміка показників за тижнями
-          </p>
-        </div>
-      </header>
-
-      <section
-        id="history-table"
-        class="history-table"
-        aria-live="polite"
-      >
-        <div class="history-loading">
           Завантаження…
-        </div>
-      </section>
-    </main>
+        </p>
 
-  </div>
+      </div>
+
+      <button
+        id="copy-button"
+        class="copy-button"
+        type="button"
+        aria-label="Завантажити статистику як PNG"
+      >
+        <span>
+          Копіювати дані
+        </span>
+      </button>
+
+    </header>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <section
+      id="metrics"
+      class="metrics"
+      aria-live="polite"
+    ></section>
+
+
+    <div
+      id="status"
+      class="status"
+      role="status"
+      aria-live="polite"
+    ></div>
+
+  </main>
+
+
+  <!-- =======================================================
+       SECOND SCREEN
+       ======================================================= -->
+
+  <main
+    id="history"
+    class="history-page"
+  >
+
+    <header class="history-header">
+
+      <div>
+
+        <h2>
+          Історія статистики
+        </h2>
+
+        <p class="history-subtitle">
+          Динаміка показників за тижнями
+        </p>
+
+      </div>
+
+    </header>
+
+
+    <section
+      id="history-table"
+      class="history-table"
+      aria-live="polite"
+    >
+
+      <div class="history-loading">
+        Завантаження…
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================================
+       LIBRARIES
+       ======================================================= -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
+  ></script>
+
   <script src="config.js"></script>
+
   <script src="app.js"></script>
+
+
+  <!-- =======================================================
+       CURTAIN EFFECT
+       ======================================================= -->
 
   <script>
     (function initCurtainEffect() {
-      const firstScreen = document.querySelector('.page');
+      const firstScreen =
+        document.querySelector('.page');
 
       if (!firstScreen) {
         return;
@@ -84,14 +163,23 @@
       let ticking = false;
 
       function updateCurtain() {
-        const screenHeight = window.innerHeight;
+        const viewportHeight =
+          window.innerHeight;
 
-        const progress = Math.min(
-          Math.max(window.scrollY / screenHeight, 0),
-          1
-        );
+        const scrollTop =
+          window.scrollY;
 
-        const translateY = -progress * screenHeight;
+        const progress =
+          Math.min(
+            Math.max(
+              scrollTop / viewportHeight,
+              0
+            ),
+            1
+          );
+
+        const translateY =
+          -progress * viewportHeight;
 
         firstScreen.style.transform =
           `translate3d(0, ${translateY}px, 0)`;
@@ -106,13 +194,17 @@
 
         ticking = true;
 
-        requestAnimationFrame(updateCurtain);
+        requestAnimationFrame(
+          updateCurtain
+        );
       }
 
       window.addEventListener(
         'scroll',
         requestUpdate,
-        { passive: true }
+        {
+          passive: true
+        }
       );
 
       window.addEventListener(
