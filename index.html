@@ -43,5 +43,63 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
+  <script>
+    /* =========================================================
+   CURTAIN EFFECT
+   ========================================================= */
+
+(function initCurtainEffect() {
+  const firstScreen = document.querySelector('.page');
+
+  if (!firstScreen) {
+    return;
+  }
+
+  let ticking = false;
+
+  function updateCurtain() {
+    const screenHeight = window.innerHeight;
+
+    /*
+     * Перший екран залишається sticky,
+     * але поступово виїжджає вгору на висоту viewport.
+     */
+    const progress = Math.min(
+      Math.max(window.scrollY / screenHeight, 0),
+      1
+    );
+
+    const translateY = progress * -screenHeight;
+
+    firstScreen.style.transform =
+      `translate3d(0, ${translateY}px, 0)`;
+
+    ticking = false;
+  }
+
+  function requestUpdate() {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+
+    requestAnimationFrame(updateCurtain);
+  }
+
+  window.addEventListener(
+    'scroll',
+    requestUpdate,
+    { passive: true }
+  );
+
+  window.addEventListener(
+    'resize',
+    requestUpdate
+  );
+
+  updateCurtain();
+})();
+  </script>
 </body>
 </html>
