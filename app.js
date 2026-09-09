@@ -218,9 +218,7 @@
   // =========================================================
 
   async function getData() {
-
     if (cfg.CSV_URL) {
-
       const response =
         await fetch(
           cfg.CSV_URL,
@@ -263,7 +261,6 @@
   // =========================================================
 
   async function getHistoryData() {
-
     if (!cfg.HISTORY_CSV_URL) {
       throw new Error(
         'HISTORY_CSV_URL не налаштований'
@@ -295,7 +292,6 @@
   // =========================================================
 
   function normalize(row) {
-
     const percentRaw =
       String(
         row.percent ??
@@ -306,7 +302,6 @@
         .replace(',', '.');
 
     return {
-
       week_start:
         row.week_start ||
         row.start_date ||
@@ -343,7 +338,6 @@
   }
 
   function chooseCurrentWeek(rows) {
-
     const normalized =
       rows
         .map(normalize)
@@ -416,12 +410,10 @@
   // =========================================================
 
   function render(rows) {
-
     const byMetric =
       new Map();
 
     rows.forEach(r => {
-
       if (
         !byMetric.has(
           r.metric_id
@@ -436,7 +428,6 @@
           r
         );
       }
-
     });
 
     const items =
@@ -475,7 +466,6 @@
         .join('');
 
     if (items.length) {
-
       const week =
         currentWeek();
 
@@ -492,7 +482,6 @@
   // =========================================================
 
   const HISTORY_METRICS = [
-
     {
       key: 'experience',
       label: 'Досвід керування'
@@ -527,7 +516,6 @@
       key: 'acquisition_channels',
       label: 'Канали поширення інформації'
     }
-
   ];
 
   // =========================================================
@@ -535,7 +523,6 @@
   // =========================================================
 
   function formatHistoryDate(value) {
-
     if (!value) {
       return '';
     }
@@ -544,7 +531,6 @@
   }
 
   function parseHistoryDate(value) {
-
     if (!value) {
       return 0;
     }
@@ -555,7 +541,6 @@
     if (
       parts.length === 3
     ) {
-
       const day =
         Number(parts[0]);
 
@@ -586,14 +571,13 @@
   // HISTORY PERCENT
   // =========================================================
 
-  function historyPercent(value) {
-
+  function historyPercentValue(value) {
     if (
       value === undefined ||
       value === null ||
       value === ''
     ) {
-      return '—';
+      return null;
     }
 
     const number =
@@ -606,6 +590,17 @@
     if (
       !Number.isFinite(number)
     ) {
+      return null;
+    }
+
+    return number;
+  }
+
+  function historyPercent(value) {
+    const number =
+      historyPercentValue(value);
+
+    if (number === null) {
       return '—';
     }
 
@@ -618,11 +613,62 @@
   }
 
   // =========================================================
+  // HISTORY CHANGE
+  // =========================================================
+
+  function historyChange(
+    currentValue,
+    previousValue
+  ) {
+    const current =
+      historyPercentValue(
+        currentValue
+      );
+
+    const previous =
+      historyPercentValue(
+        previousValue
+      );
+
+    if (
+      current === null ||
+      previous === null
+    ) {
+      return '';
+    }
+
+    const change =
+      current - previous;
+
+    if (
+      Math.abs(change) < 0.005
+    ) {
+      return '(0)';
+    }
+
+    const sign =
+      change > 0
+        ? '+'
+        : '';
+
+    const formatted =
+      Math.abs(change)
+        .toLocaleString(
+          'uk-UA',
+          {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1
+          }
+        );
+
+    return `(${sign}${change < 0 ? '-' : ''}${formatted})`;
+  }
+
+  // =========================================================
   // HISTORY RENDER
   // =========================================================
 
   function renderHistory(rows) {
-
     if (!historyTableEl) {
       return;
     }
@@ -631,7 +677,6 @@
       !rows ||
       !rows.length
     ) {
-
       historyTableEl.innerHTML = `
         <div class="history-loading">
           Немає історичних даних
@@ -668,62 +713,91 @@
 
     const bodyRows =
       sortedRows
-        .map(row => {
+        .map(
+          (row, rowIndex) => {
 
-          const metricCells =
-            HISTORY_METRICS
-              .map(metric => {
+            const previousRow =
+              sortedRows[
+                rowIndex + 1
+              ];
 
-                const percent =
-                  row[
-                    `${metric.key}_percent`
-                  ];
+            const metricCells =
+              HISTORY_METRICS
+                .map(metric => {
 
-                const answer =
-                  row[
-                    `${metric.key}_answer`
-                  ] || '';
+                  const percent =
+                    row[
+                      `${metric.key}_percent`
+                    ];
 
-                return `
-                  <td>
+                  const previousPercent =
+                    previousRow
+                      ? previousRow[
+                          `${metric.key}_percent`
+                        ]
+                      : '';
 
-                    <div class="history-percent">
-                      ${historyPercent(
-                        percent
-                      )}
-                    </div>
+                  const change =
+                    historyChange(
+                      percent,
+                      previousPercent
+                    );
 
-                    <div class="history-answer">
-                      ${escapeHtml(
-                        answer
-                      )}
-                    </div>
+                  const answer =
+                    row[
+                      `${metric.key}_answer`
+                    ] || '';
 
-                  </td>
-                `;
-              })
-              .join('');
+                  return `
+                    <td>
 
-          return `
-            <tr>
+                      <div class="history-percent">
+                        ${historyPercent(
+                          percent
+                        )}
 
-              <td class="history-date">
-                ${escapeHtml(
-                  formatHistoryDate(
-                    row.week_end
-                  )
-                )}
-              </td>
+                        ${
+                          change
+                            ? `
+                              <span class="history-change">
+                                ${change}
+                              </span>
+                            `
+                            : ''
+                        }
+                      </div>
 
-              ${metricCells}
+                      <div class="history-answer">
+                        ${escapeHtml(
+                          answer
+                        )}
+                      </div>
 
-            </tr>
-          `;
-        })
+                    </td>
+                  `;
+                })
+                .join('');
+
+            return `
+              <tr>
+
+                <td class="history-date">
+                  ${escapeHtml(
+                    formatHistoryDate(
+                      row.week_end
+                    )
+                  )}
+                </td>
+
+                ${metricCells}
+
+              </tr>
+            `;
+          }
+        )
         .join('');
 
     historyTableEl.innerHTML = `
-
       <div class="history-table-wrapper">
 
         <table>
@@ -751,7 +825,6 @@
         </table>
 
       </div>
-
     `;
   }
 
@@ -760,7 +833,6 @@
   // =========================================================
 
   function trimPercent(n) {
-
     return Number(n).toLocaleString(
       'uk-UA',
       {
@@ -770,7 +842,6 @@
   }
 
   function escapeHtml(v) {
-
     return String(v).replace(
       /[&<>'"]/g,
       ch =>
@@ -785,7 +856,6 @@
   }
 
   function status(message) {
-
     if (!statusEl) {
       return;
     }
@@ -816,12 +886,10 @@
   // =========================================================
 
   async function downloadPng() {
-
     copyButton.disabled =
       true;
 
     try {
-
       if (document.fonts?.ready) {
         await document.fonts.ready;
       }
@@ -866,7 +934,6 @@
       );
 
     } catch (e) {
-
       console.error(e);
 
       status(
@@ -874,7 +941,6 @@
       );
 
     } finally {
-
       copyButton.disabled =
         false;
     }
@@ -885,7 +951,6 @@
   // =========================================================
 
   async function init() {
-
     document.documentElement
       .classList.add(
         'loading'
@@ -896,7 +961,6 @@
     // -------------------------------------------------------
 
     try {
-
       const data =
         await getData();
 
@@ -914,7 +978,6 @@
       render(rows);
 
     } catch (e) {
-
       console.error(
         'MAIN DATA ERROR:',
         e
@@ -925,7 +988,6 @@
       );
 
       try {
-
         const fallback =
           await fetch(
             './demo-data.json'
@@ -940,7 +1002,6 @@
         );
 
       } catch (_) {}
-
     }
 
     // -------------------------------------------------------
@@ -948,7 +1009,6 @@
     // -------------------------------------------------------
 
     try {
-
       const historyData =
         await getHistoryData();
 
@@ -962,22 +1022,18 @@
       );
 
     } catch (e) {
-
       console.error(
         'HISTORY ERROR:',
         e
       );
 
       if (historyTableEl) {
-
         historyTableEl.innerHTML = `
           <div class="history-loading">
             Не вдалося завантажити історію
           </div>
         `;
-
       }
-
     }
 
     document.documentElement
@@ -991,14 +1047,11 @@
   // =========================================================
 
   if (copyButton) {
-
     copyButton.addEventListener(
       'click',
       downloadPng
     );
-
   }
 
   init();
-
 })();
